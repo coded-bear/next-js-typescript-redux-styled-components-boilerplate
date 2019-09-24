@@ -7,11 +7,9 @@ export function createSample(name: Sample): SampleTypes {
   };
 }
 
-export function deleteSample(timestamp: number): SampleTypes {
+export function deleteSample(name: Sample): SampleTypes {
   return {
     type: DELETE_SAMPLE,
-    meta: {
-      timestamp
-    }
+    payload: name
   };
 }

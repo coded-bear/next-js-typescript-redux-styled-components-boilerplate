@@ -1,6 +1,5 @@
 export interface Sample {
   name: string;
-  timestamp: number;
 }
 
 export const CREATE_SAMPLE = "CREATE_SAMPLE";
@@ -13,9 +12,7 @@ interface CreateSample {
 
 interface DeleteSample {
   type: typeof DELETE_SAMPLE;
-  meta: {
-    timestamp: number;
-  };
+  payload: Sample;
 }
 
 export type SampleTypes = CreateSample | DeleteSample;
