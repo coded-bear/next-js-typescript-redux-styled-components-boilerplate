@@ -1,23 +1,24 @@
-import { createServer } from "http";
-import { parse } from "url";
+import express from "express";
 import next from "next";
+import compression from "compression";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
-const handle = app.getRequestHandler();
+const handle: any = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url!, true);
-    const { pathname, query } = parsedUrl;
+  const server = express();
+  server.use(compression());
 
-    if (pathname === "/page") {
-      app.render(req, res, "/page", query);
-    } else {
-      handle(req, res, parsedUrl);
-    }
-  }).listen(port);
+  server.get("/page", (req: express.Request, res: express.Response) => {
+    return app.render(req, res, "/page", req.query);
+  });
 
-  console.log(`> Server listening at ${port} port as ${dev ? "development" : process.env.NODE_ENV}`);
+  server.get("*", (req: express.Request, res: express.Response) => handle(req, res));
+
+  server.use(handle).listen(port, (err: any) => {
+    if (err) throw new Error(err);
+    console.log(`> Server listening at ${port} port as ${dev ? "development" : process.env.NODE_ENV}`);
+  });
 });
