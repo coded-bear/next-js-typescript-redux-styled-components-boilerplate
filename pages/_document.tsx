@@ -8,20 +8,26 @@ interface Props {
 
 class MyDocument extends Document<Props> {
   static async getInitialProps(ctx: any) {
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps: any = await Document.getInitialProps(ctx);
 
-    const sheet = new ServerStyleSheet();
-    const main = sheet.collectStyles(<Main />);
-    const styleTags = sheet.getStyleElement();
+    const sheet: any = new ServerStyleSheet();
+    const main: any = sheet.collectStyles(<Main />);
+    const styleTags: any = sheet.getStyleElement();
 
     return { ...initialProps, main, styleTags };
   }
 
   render() {
     const { main, styleTags } = this.props;
+
     return (
       <Html>
-        <Head>{styleTags}</Head>
+        <Head>
+          <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+          <link rel="icon" href="/static/images/favicon.ico" />
+
+          {styleTags}
+        </Head>
         <body>
           {main}
           <NextScript />
