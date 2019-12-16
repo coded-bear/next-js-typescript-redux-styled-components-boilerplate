@@ -1,3 +1,9 @@
-import React from "react";
+import React, { PureComponent } from "react";
 
-export default () => <div>Page</div>;
+class Page extends PureComponent {
+  render() {
+    return <div>Page</div>;
+  }
+}
+
+export default Page;
