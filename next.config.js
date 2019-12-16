@@ -3,6 +3,12 @@ const withImages = require("next-images");
 module.exports = withImages({
   inlineImageLimit: false,
   useFileSystemPublicRoutes: false,
+  exportTrailingSlash: true,
+  exportPathMap: function() {
+    return {
+      "/page": { page: "/page" }
+    };
+  },
   webpack: config => {
     const originalEntry = config.entry;
     config.entry = async () => {

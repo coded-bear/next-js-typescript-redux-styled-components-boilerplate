@@ -1,4 +1,4 @@
-# Dependency directories
+# dependencies
 node_modules/
 
 # next.js build output
@@ -6,3 +6,6 @@ node_modules/
 
 # production server output
 dist
+
+# static export output
+out
