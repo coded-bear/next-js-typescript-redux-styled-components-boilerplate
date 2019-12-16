@@ -1,23 +1,41 @@
-import express from "express";
 import next from "next";
+import express from "express";
 import compression from "compression";
+import { Server, Req, Res, Err } from "../common/utils/types";
 
-const port = parseInt(process.env.PORT || "3000", 10);
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
+const port: number = parseInt(process.env.PORT || "3000", 10);
+const dev: boolean = process.env.NODE_ENV !== "production";
+const app: any = next({ dev });
 const handle: any = app.getRequestHandler();
 
 app.prepare().then(() => {
-  const server = express();
+  const server: Server = express();
+
+  server.use(
+    "/static",
+    express.static(__dirname + "/static", {
+      setHeaders(res) {
+        res.setHeader("Cache-Control", "public,max-age=31536000,immutable");
+      }
+    })
+  );
+  server.use(
+    "/dist",
+    express.static(__dirname + "/dist", {
+      setHeaders(res) {
+        res.setHeader("Cache-Control", "public,max-age=31536000,immutable");
+      }
+    })
+  );
   server.use(compression());
 
-  server.get("/page", (req: express.Request, res: express.Response) => {
+  server.get("/page", (req: Req, res: Res) => {
     return app.render(req, res, "/page", req.query);
   });
 
-  server.get("*", (req: express.Request, res: express.Response) => handle(req, res));
+  server.get("*", (req: Req, res: Res) => handle(req, res));
 
-  server.use(handle).listen(port, (err: any) => {
+  server.listen(port, (err: Err) => {
     if (err) throw new Error(err);
     console.log(`> Server listening at ${port} port as ${dev ? "development" : process.env.NODE_ENV}`);
   });
