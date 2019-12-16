@@ -1,6 +1,7 @@
 {
   "name": "next-js-typescript-redux-styled-components-boilerplate",
   "description": "Next.js with TypeScript, Redux, styled-components boilerplate",
+  "keywords": [],
   "author": "Łukasz Warchoł",
   "license": "ISC",
   "version": "1.0.0",
