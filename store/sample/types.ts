@@ -1,9 +1,9 @@
+export const CREATE_SAMPLE = "CREATE_SAMPLE";
+export const DELETE_SAMPLE = "DELETE_SAMPLE";
+
 export interface Sample {
   name: string;
 }
-
-export const CREATE_SAMPLE = "CREATE_SAMPLE";
-export const DELETE_SAMPLE = "DELETE_SAMPLE";
 
 interface CreateSample {
   type: typeof CREATE_SAMPLE;
